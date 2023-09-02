@@ -12,7 +12,7 @@ export default function Home() {
     <main className="relative">
     <QueryClientProvider client={queryClient}>
     <Hero/>
-    <Products searchTerm=""/>
+    <Products/>
     </QueryClientProvider>
     </main>
   )
