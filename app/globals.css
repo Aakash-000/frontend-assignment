@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@200;300;400&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400&family=Nunito:wght@200&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+  .nav-search{
+    @apply px-8 py-2 text-lg text-right bg-navsearch 
+    border-none  outline-none shadow-sm rounded-full
+  }
+
+  .hero-button{
+    @apply px-5 py-3 border text-lg text-buttontext leading-none rounded-full
+    bg-logocolor 
+  }
+  .product-card{
+    @apply flex flex-col justify-start gap-5 min-h-full shadow-md px-8 py-5 cursor-pointer
+  }
+}
