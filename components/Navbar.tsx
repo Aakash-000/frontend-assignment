@@ -1,13 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from 'react';
+import { ButtonHTMLAttributes, FormEvent, MouseEventHandler, useContext, useState } from 'react';
 import Products from "./Products";
+import { AuthContext } from "./context/SearchContext";
 
 const Navbar = () => {
 
-  const [searchterm,setSearchTerm] = useState("")
-
+  const [searchterm,setSearchTerm] = useState<string>("")
+  const [state,setState] = useContext(AuthContext);
+  
+  const handleClick = ()=>{
+  setState((prevValue:string)=>prevValue = searchterm)
+  console.log(searchterm)
+  }
+  
   return (
     <>
     <header className="shadow-md">
@@ -23,11 +30,12 @@ const Navbar = () => {
         </svg>
         <input 
         type="text"
-        onChange={(e)=>setSearchTerm((prevValue)=>prevValue=e.target.value)}
+        onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setSearchTerm((prevValue)=>prevValue=e.target.value)}
         value={searchterm}
         className="ml-10 bg-navsearch outline-none text-sm"
         placeholder="Search for Products"/>
         </div>
+        <button className="hero-button" type="submit" onClick={handleClick}>Search</button>
     </nav>
     </header>
     </>

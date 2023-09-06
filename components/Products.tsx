@@ -1,17 +1,26 @@
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation';
-
+import React,{useContext} from 'react'
+import { AuthContext } from './context/SearchContext';
 
 const Products = () => {
     const router = useRouter()
-
-    const {isLoading,error,data} = useQuery(["products"],()=>
+    // const[arraylist,setArrayList] = React.useState([])
+    const [state] = useContext(AuthContext);
+    
+    console.log(state)
+    const {isLoading,error,data} = state !== undefined || "" ?  useQuery([`products/${state}`],()=>
+    fetch(`https://fakestoreapi.com/products?q=${state}`)
+    .then(res=>res.json())
+    .then(res => {
+    return res.sort((a:any,b:any)=>a.price - b.price).filter((item:any)=>item.title.includes(state))})
+    ) : useQuery(["products"], ()=>
     fetch('https://fakestoreapi.com/products')
     .then(res=>res.json())
     .then(res => {
     return res})
     )
-
+    
     console.log(data)
     if(data == undefined){
         return;
@@ -21,7 +30,7 @@ const Products = () => {
     <div className="w-full flex flex-col gap-3 pt-5">
         <h3 className="text-center text-3xl font-extrabold text-logocolor">Product Listing</h3>
         <div className="grid grid-cols-1 gap-8 px-8 py-5 lg:grid-cols-4 md:grid-cols-3">
-        {data.slice(0,6).map((item:ListElement)=>{
+        {data.map((item:ListElement)=>{
         let array:string[] = []
         let ratenum = item?.rating.rate
         function rating(){
@@ -57,5 +66,6 @@ const Products = () => {
     </div>
   )
 }
+
 
 export default Products
